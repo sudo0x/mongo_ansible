@@ -1,0 +1,9 @@
+---
+- name: create file to initialize replica set
+  template: src=replset_init.j2 dest=/tmp/replset_init.js
+
+- name: pause
+  pause: seconds=15
+
+- name: initialize
+  shell: mongo /tmp/replset_init.js

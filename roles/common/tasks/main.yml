@@ -1,0 +1,21 @@
+---
+- name: copy host file to all hosts
+  copy: src=host dest=/etc/hosts
+  sudo: yes
+
+- name: import public key
+  apt_key: keyserver=hkp://keyserver.ubuntu.com:80 id=7F0CEB10
+  sudo: yes
+
+- name: Add 10gen repository
+  apt_repository: repo='deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' state=present
+  sudo: yes
+
+- name: Update and Install Mongodb
+  apt: name=mongodb-org state=present update_cache=yes
+  sudo: yes
+
+- name: push conf file
+  copy: src=mongod.conf dest=/etc/mongod.conf owner=root group=root mode=0644
+  sudo: yes
+  notify: mongod-restart

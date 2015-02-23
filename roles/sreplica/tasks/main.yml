@@ -1,0 +1,3 @@
+---
+- name: create file to initialize replica set
+  template: src=replset_status.j2 dest=/tmp/replset_status.js
